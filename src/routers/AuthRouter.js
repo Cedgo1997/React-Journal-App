@@ -11,7 +11,7 @@ export const AuthRouter = () => {
 					<Route exact path='/auth/login' component={LoginScreen} />
 					<Route
 						exact
-						path='/auht/register'
+						path='/auth/register'
 						component={RegisterScreen}
 					/>
 					<Redirect to='/auth/login' />
