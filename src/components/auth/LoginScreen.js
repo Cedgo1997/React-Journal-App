@@ -8,10 +8,16 @@ export const LoginScreen = () => {
 		password: '',
 	});
 
+	const handleLogin = (e) => {
+		e.preventDefault();
+		console.log(email, password);
+		reset();
+	};
+
 	return (
 		<>
 			<h3 className='auth__title'>Login</h3>
-			<form>
+			<form onSubmit={handleLogin}>
 				<input
 					className='auth__input'
 					type='text'
