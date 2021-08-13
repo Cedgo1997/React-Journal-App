@@ -10,7 +10,7 @@
 		outline: none;
 	}
 	&:hover {
-		color: darken($color: $primary, $amount: 20);
+		color: darken($color: white, $amount: 10);
 	}
 }
 
@@ -21,10 +21,10 @@
 		background-color: lighten($color: $primary, $amount: 15);
 	}
 	&:hover {
-		background-color: darken($color: $primary, $amount: 20);
-		color: white;
+		background-color: darken($color: $primary, $amount: 15);
 	}
 }
+
 
 .btn-block {
 	width: 100%;

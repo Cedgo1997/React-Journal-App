@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
 	startGoogleLogin,
@@ -26,6 +26,10 @@ export const LoginScreen = () => {
 		dispatch(startGoogleLogin());
 	};
 
+	const { loading } = useSelector((state) => state.ui);
+
+	console.log(loading);
+
 	return (
 		<>
 			<h3 className='auth__title'>Login</h3>
@@ -47,7 +51,11 @@ export const LoginScreen = () => {
 					value={password}
 					onChange={handleInputChange}
 				/>
-				<button className='btn btn-primary btn-block' type='submit'>
+				<button
+					className='btn btn-primary btn-block'
+					type='submit'
+					disabled={loading}
+				>
 					Login
 				</button>
 				<hr />
