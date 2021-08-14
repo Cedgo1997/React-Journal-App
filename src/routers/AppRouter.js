@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -14,13 +14,26 @@ import { login } from '../actions/auth';
 export const AppRouter = () => {
 	const dispatch = useDispatch();
 
+	const [{ checking, isLoggedIn }, setState] = useState({
+		checking: true,
+		isLoggedIn: false,
+	});
+
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user?.uid) {
 				dispatch(login(user.uid, user.displayName));
+				setState((state) => ({ ...state, isLoggedIn: true }));
+			} else {
+				setState((state) => ({ ...state, isLoggedIn: false }));
 			}
+			setState((state) => ({ ...state, checking: false }));
 		});
-	}, [dispatch]);
+	}, [dispatch, setState]);
+
+	if (checking) {
+		return <h1>Espere...</h1>;
+	}
 
 	return (
 		<div>
