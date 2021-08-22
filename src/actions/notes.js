@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import { db } from '../firebase/firebase-config';
+import { fileUpload } from '../helpers/fileUpload';
 import { loadNotes } from '../helpers/loadNotes';
 import { types } from '../types/types';
 
@@ -60,3 +61,25 @@ export const refreshNote = (id, note) => ({
 		}
 	}
 })
+
+export const startUploading = (file) => {
+	return async (dispatch, getState) => {
+		const { active } = getState().notes;
+		Swal.fire({
+			title: 'Uploading...',
+			text: 'Please, wait...',
+			allowOutsideClick: false,
+			didOpen: () => {
+				Swal.showLoading();
+			}
+		});
+		const fileUrl = await fileUpload(file);
+		active.url = fileUrl;
+		const activeNoteWithoutId = { ...active };
+		delete activeNoteWithoutId.id;
+		dispatch(startSaveNote(active));
+		dispatch(activeNote(active.id, activeNoteWithoutId));
+		dispatch(refreshNote(active.id, activeNoteWithoutId));
+		Swal.close();
+	}
+}

@@ -8,7 +8,7 @@ export const NoteScreen = () => {
 
 	const { active: note } = useSelector(state => state.notes);
 	const [values, handleInputChange, reset] = useForm(note);
-	const { title, body, url } = values;
+	const { title, body } = values;
 
 	const activeId = useRef(note.id);
 	const dispatch = useDispatch();
@@ -44,12 +44,12 @@ export const NoteScreen = () => {
 					onChange={handleInputChange}
 				></textarea>
 				{
-					url && (<div className='notes__image'>
+					note.url ? (<div className='notes__image'>
 						<img
-							src={`${url}`}
+							src={`${note.url}`}
 							alt='pic'
 						/>
-					</div>)
+					</div>) : 'Add image'
 				}
 			</div>
 		</div>
