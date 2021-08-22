@@ -60,7 +60,7 @@ export const refreshNote = (id, note) => ({
 			...note
 		}
 	}
-})
+});
 
 export const startUploading = (file) => {
 	return async (dispatch, getState) => {
@@ -82,4 +82,17 @@ export const startUploading = (file) => {
 		dispatch(refreshNote(active.id, activeNoteWithoutId));
 		Swal.close();
 	}
-}
+};
+
+export const startDeleting = (id) => {
+	return async (dispatch, getState) => {
+		const { uid } = getState().auth;
+		await db.doc(`${uid}/journal/notes/${id}`).delete();
+		dispatch(deleteNote(id));
+	}
+};
+
+export const deleteNote = (id) => ({
+	type: types.notesDelete,
+	payload: id
+});
