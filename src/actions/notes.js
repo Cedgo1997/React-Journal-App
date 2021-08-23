@@ -93,10 +93,29 @@ export const startUploading = (file) => {
 };
 
 export const startDeleting = (id) => {
-	return async (dispatch, getState) => {
+	return (dispatch, getState) => {
 		const { uid } = getState().auth;
-		await db.doc(`${uid}/journal/notes/${id}`).delete();
-		dispatch(deleteNote(id));
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				db.doc(`${uid}/journal/notes/${id}`).delete().then(() => {
+					Swal.fire(
+						'Deleted!',
+						'Your note has been deleted.',
+						'success'
+					);
+					dispatch(deleteNote(id));
+				});
+
+			}
+		})
 	}
 };
 
