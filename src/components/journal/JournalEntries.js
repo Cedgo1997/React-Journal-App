@@ -8,7 +8,7 @@ export const JournalEntries = () => {
 	return (
 		<div className='journal__entries'>
 			{notes.map((note) => (
-				<JournalEntry key={note.id} {...note} />
+				<JournalEntry key={note.id} {...note} className='animate__animated animate__fadeIn animate__fast' />
 			))}
 		</div>
 	);
